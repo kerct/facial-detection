@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Facial Recognition</string>
+    <string name="home_button">Start</string>
 </resources>
