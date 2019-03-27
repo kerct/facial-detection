@@ -2,7 +2,6 @@ package com.example.facialrecognition;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.hardware.Camera;
 import android.support.constraint.ConstraintLayout;
@@ -22,7 +21,6 @@ public class CameraActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        //setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         cameraPreviewLayout = findViewById(R.id.cameraLayout);
 
         if (ContextCompat.checkSelfPermission(CameraActivity.this, Manifest.permission.CAMERA)
@@ -70,6 +68,12 @@ public class CameraActivity extends AppCompatActivity {
 
         if(camera != null) {
             camera.setDisplayOrientation(90);
+
+            Camera.Parameters params = camera.getParameters();
+            params.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+            params.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            camera.setParameters(params);
+
             mImageSurfaceView = new ImageSurfaceView(CameraActivity.this, camera);
             cameraPreviewLayout.addView(mImageSurfaceView);
         } else {
