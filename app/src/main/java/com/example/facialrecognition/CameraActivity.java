@@ -9,7 +9,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+
+import com.example.facialrecognition.components.ImageSurfaceView;
 
 public class CameraActivity extends AppCompatActivity {
     static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;

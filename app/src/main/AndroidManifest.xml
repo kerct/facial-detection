@@ -17,6 +17,10 @@
             android:name=".CameraActivity"
             android:parentActivityName=".MainActivity" />
 
+        <activity
+            android:name=".LivePreviewActivity"
+            android:parentActivityName=".MainActivity" />
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

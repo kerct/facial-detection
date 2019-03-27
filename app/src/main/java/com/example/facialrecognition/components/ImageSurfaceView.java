@@ -1,4 +1,4 @@
-package com.example.facialrecognition;
+package com.example.facialrecognition.components;
 
 import android.content.Context;
 import android.hardware.Camera;
