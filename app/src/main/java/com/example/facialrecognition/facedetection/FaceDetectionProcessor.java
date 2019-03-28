@@ -43,7 +43,6 @@ public class FaceDetectionProcessor extends VisionProcessorBase<List<FirebaseVis
 
         detector = FirebaseVision.getInstance().getVisionFaceDetector(options);
 
-        // changed to 0, supposed to show nose
         overlayBitmap = BitmapFactory.decodeResource(resources, R.drawable.clown_nose);
     }
 

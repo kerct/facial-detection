@@ -3,7 +3,10 @@
     package="com.example.facialrecognition">
 
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
@@ -16,11 +19,12 @@
         <activity
             android:name=".CameraActivity"
             android:parentActivityName=".MainActivity" />
-
+        <activity
+            android:name=".CameraTestActivity"
+            android:parentActivityName=".MainActivity" />
         <activity
             android:name=".LivePreviewActivity"
             android:parentActivityName=".MainActivity" />
-
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

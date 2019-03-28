@@ -13,7 +13,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void start(View view) {
-        Intent intent = new Intent(this, LivePreviewActivity.class);
+        Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
     }
 }
