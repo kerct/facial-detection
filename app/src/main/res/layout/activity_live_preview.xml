@@ -25,14 +25,6 @@
           android:layout_alignParentBottom="true"/>
   </com.example.facialrecognition.components.CameraSourcePreview>
 
-  <TextView android:id="@+id/text"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:paddingLeft="80dp"
-      android:textColor="#FFF"
-      android:textSize="20sp"
-      android:textStyle="bold" />
-
   <FrameLayout
       android:id="@+id/control"
       android:layout_width="match_parent"

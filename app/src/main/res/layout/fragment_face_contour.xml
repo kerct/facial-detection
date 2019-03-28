@@ -5,10 +5,16 @@
     android:layout_height="match_parent"
     tools:context=".fragments.FaceContourFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.example.facialrecognition.components.CameraSourcePreview
+        android:id="@+id/preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <com.example.facialrecognition.components.GraphicOverlay
+            android:id="@+id/overlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </com.example.facialrecognition.components.CameraSourcePreview>
 
 </FrameLayout>

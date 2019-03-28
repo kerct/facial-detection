@@ -1,10 +1,14 @@
 package com.example.facialrecognition.components;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.res.Configuration;
+import android.graphics.Point;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup;
@@ -110,6 +114,11 @@ public class CameraSourcePreview extends ViewGroup {
 
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        ((Activity) getContext()).getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        //int width = displayMetrics.heightPixels;
+        //int height = displayMetrics.widthPixels;
+
         int width = 320;
         int height = 240;
         if (cameraSource != null) {
@@ -131,18 +140,33 @@ public class CameraSourcePreview extends ViewGroup {
         final int layoutHeight = bottom - top;
 
         // Computes height and width for potentially doing fit width.
-        int childWidth = layoutWidth;
-        int childHeight = (int) (((float) layoutWidth / (float) width) * height);
+        int childWidth;
+        int childHeight;
+        int childXOffset = 0;
+        int childYOffset = 0;
+        float widthRatio = (float) layoutWidth / (float) width;
+        float heightRatio = (float) layoutHeight / (float) height;
 
-        // If height is too tall using fit width, does fit height instead.
-        if (childHeight > layoutHeight) {
+        // To fill the view with the camera preview, while also preserving the correct aspect ratio,
+        // it is usually necessary to slightly oversize the child and to crop off portions along one
+        // of the dimensions.  We scale up based on the dimension requiring the most correction, and
+        // compute a crop offset for the other dimension.
+        if (widthRatio > heightRatio) {
+            childWidth = layoutWidth;
+            childHeight = (int) ((float) height * widthRatio);
+            childYOffset = (childHeight - layoutHeight) / 2;
+        } else {
+            childWidth = (int) ((float) width * heightRatio);
             childHeight = layoutHeight;
-            childWidth = (int) (((float) layoutHeight / (float) height) * width);
+            childXOffset = (childWidth - layoutWidth) / 2;
         }
 
         for (int i = 0; i < getChildCount(); ++i) {
-            getChildAt(i).layout(0, 0, childWidth, childHeight);
-            Log.d(TAG, "Assigned view: " + i);
+            // One dimension will be cropped.  We shift child over or up by this offset and adjust
+            // the size to maintain the proper aspect ratio.
+            getChildAt(i).layout(
+                    -1 * childXOffset, -1 * childYOffset,
+                    childWidth - childXOffset, childHeight - childYOffset);
         }
 
         try {
