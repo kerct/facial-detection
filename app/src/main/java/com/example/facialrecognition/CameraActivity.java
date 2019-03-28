@@ -7,9 +7,7 @@ import android.hardware.Camera;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
@@ -22,7 +20,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.facialrecognition.components.CameraSource;
 import com.example.facialrecognition.components.CameraSourcePreview;
@@ -141,6 +138,9 @@ public class CameraActivity extends AppCompatActivity {
         }
 
         private void createCameraSource(String model) {
+            if (cameraSource != null) {
+                cameraSource.release();
+            }
             // If there's no existing cameraSource, create one.
             if (cameraSource == null) {
                 cameraSource = new CameraSource(this.getActivity(), graphicOverlay);
@@ -227,9 +227,11 @@ public class CameraActivity extends AppCompatActivity {
 
         @Override
         public void onDestroy() {
+            preview.stop();
             super.onDestroy();
             if (cameraSource != null) {
                 cameraSource.release();
+                cameraSource = null;
             }
         }
 
