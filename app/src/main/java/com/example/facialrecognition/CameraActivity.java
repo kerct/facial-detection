@@ -3,10 +3,12 @@ package com.example.facialrecognition;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
@@ -54,7 +56,23 @@ public class CameraActivity extends AppCompatActivity {
         TabLayout tabLayout = findViewById(R.id.tabs);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
-        tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -89,6 +107,7 @@ public class CameraActivity extends AppCompatActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
+            Log.d(TAG, "on create view");
             View rootView;
             if(getArguments().getInt(ARG_SECTION_NUMBER) == 1) {
                 rootView = inflater.inflate(R.layout.fragment_face_detection, container, false);
@@ -138,7 +157,7 @@ public class CameraActivity extends AppCompatActivity {
                         Log.e(TAG, "Unknown model: " + model);
                 }
             } catch (Exception e) {
-                Log.e(TAG, "can not create camera source: " + model);
+                Log.e(TAG, "cannot create camera source: " + model);
             }
         }
 
@@ -156,6 +175,34 @@ public class CameraActivity extends AppCompatActivity {
                     Log.e(TAG, "Unable to start camera source.", e);
                     cameraSource.release();
                     cameraSource = null;
+                }
+            }
+        }
+
+        private void changeCameraSource(String model) {
+            preview.stop();
+            if (allPermissionsGranted()) {
+                createCameraSource(model);
+                startCameraSource();
+            } else {
+                getRuntimePermissions();
+            }
+        }
+
+        @Override
+        public void setUserVisibleHint(boolean isVisibleToUser) {
+            super.setUserVisibleHint(isVisibleToUser);
+            if(isVisibleToUser) {
+                if(preview != null)
+                    changeCameraSource(selectedModel);
+                else {
+                    Log.d(TAG, "preview is null");
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        public void run() {
+                            changeCameraSource(selectedModel);
+                        }
+                    }, 1000);
                 }
             }
         }
