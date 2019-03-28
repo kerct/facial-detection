@@ -176,7 +176,6 @@ public final class LivePreviewActivity extends AppCompatActivity
     startCameraSource();
   }
 
-  /** Stops the camera. */
   @Override
   protected void onPause() {
     super.onPause();

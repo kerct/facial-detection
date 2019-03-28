@@ -3,6 +3,7 @@ package com.example.facialrecognition;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.hardware.Camera;
 import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -73,15 +74,6 @@ public class CameraActivity extends AppCompatActivity {
 
             }
         });
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     public static class PlaceholderFragment extends Fragment
@@ -90,6 +82,7 @@ public class CameraActivity extends AppCompatActivity {
         private CameraSource cameraSource = null;
         private CameraSourcePreview preview;
         private GraphicOverlay graphicOverlay;
+        private boolean facingBack = true;
         private String selectedModel = FACE_DETECTION;
         private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -125,6 +118,32 @@ public class CameraActivity extends AppCompatActivity {
             graphicOverlay = rootView.findViewById(R.id.overlay);
             if (graphicOverlay == null) {
                 Log.d(TAG, "graphicOverlay is null");
+            }
+
+            FloatingActionButton fab = rootView.findViewById(R.id.fab);
+            if (fab == null) {
+                Log.d(TAG, "fab is null");
+            }
+            if (Camera.getNumberOfCameras() == 1) {
+                fab.hide();
+            }
+            else{
+                fab.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (cameraSource != null) {
+                            if (facingBack) {
+                                cameraSource.setFacing(CameraSource.CAMERA_FACING_FRONT);
+                                facingBack = false;
+                            } else {
+                                cameraSource.setFacing(CameraSource.CAMERA_FACING_BACK);
+                                facingBack = true;
+                            }
+                        }
+                        preview.stop();
+                        startCameraSource();
+                    }
+                });
             }
 
             if (allPermissionsGranted()) {
@@ -171,6 +190,7 @@ public class CameraActivity extends AppCompatActivity {
                         Log.d(TAG, "resume: graphOverlay is null");
                     }
                     preview.start(cameraSource, graphicOverlay);
+                    Log.d(TAG, "resume: camera started");
                 } catch (IOException e) {
                     Log.e(TAG, "Unable to start camera source.", e);
                     cameraSource.release();
@@ -193,8 +213,9 @@ public class CameraActivity extends AppCompatActivity {
         public void setUserVisibleHint(boolean isVisibleToUser) {
             super.setUserVisibleHint(isVisibleToUser);
             if(isVisibleToUser) {
-                if(preview != null)
+                if(preview != null) {
                     changeCameraSource(selectedModel);
+                }
                 else {
                     Log.d(TAG, "preview is null");
                     Handler handler = new Handler();
@@ -214,7 +235,6 @@ public class CameraActivity extends AppCompatActivity {
             startCameraSource();
         }
 
-        /** Stops the camera. */
         @Override
         public void onPause() {
             super.onPause();
