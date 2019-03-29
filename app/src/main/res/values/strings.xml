@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Facial Recognition</string>
+    <string name="app_name">Face Detector</string>
     <string name="home_button">Start</string>
     <string name="face_detection">Face Detection</string>
     <string name="face_contour">Face Contour</string>
