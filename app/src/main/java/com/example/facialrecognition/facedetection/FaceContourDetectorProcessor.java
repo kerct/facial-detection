@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class FaceContourDetectorProcessor extends VisionProcessorBase<List<FirebaseVisionFace>> {
 
-    private static final String TAG = "FaceContourDetectorProc";
+    private static final String TAG = "FaceContourProcessor";
 
     private final FirebaseVisionFaceDetector detector;
 

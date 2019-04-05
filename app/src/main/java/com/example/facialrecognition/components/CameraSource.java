@@ -104,7 +104,7 @@ public class CameraSource {
      * We use byte buffers internally because this is a more efficient way to call into native code
      * later (avoids a potential copy).
      *
-     * <p><b>Note:</b> uses IdentityHashMap here instead of HashMap because the behavior of an array's
+     * Note: uses IdentityHashMap here instead of HashMap because the behavior of an array's
      * equals, hashCode and toString methods is both useless and unexpected. IdentityHashMap enforces
      * identity ('==') check on the keys.
      */
@@ -193,10 +193,10 @@ public class CameraSource {
     /**
      * Closes the camera and stops sending frames to the underlying frame detector.
      *
-     * <p>This camera source may be restarted again by calling {@link #start()} or {@link
+     * This camera source may be restarted again by calling {@link #start()} or {@link
      * #start(SurfaceHolder)}.
      *
-     * <p>Call {@link #release()} instead to completely shut down this camera source and release the
+     * Call {@link #release()} instead to completely shut down this camera source and release the
      * resources of the underlying detector.
      */
     public synchronized void stop() {
@@ -649,11 +649,11 @@ public class CameraSource {
          * is available, we transfer the frame info to local variables and run detection on that frame.
          * It immediately loops back for the next frame without pausing.
          *
-         * <p>If detection takes longer than the time in between new frames from the camera, this will
+         * If detection takes longer than the time in between new frames from the camera, this will
          * mean that this loop will run without ever waiting on a frame, avoiding any context switching
          * or frame acquisition time latency.
          *
-         * <p>If you find that this is using more CPU than you'd like, you should probably decrease the
+         * If you find that this is using more CPU than you'd like, you should probably decrease the
          * FPS setting above to allow for some idle time in between frames.
          */
         @SuppressLint("InlinedApi")
