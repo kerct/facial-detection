@@ -19,9 +19,6 @@ import com.example.facialrecognition.VisionProcessorBase;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Face Contour Demo.
- */
 public class FaceContourDetectorProcessor extends VisionProcessorBase<List<FirebaseVisionFace>> {
 
     private static final String TAG = "FaceContourProcessor";

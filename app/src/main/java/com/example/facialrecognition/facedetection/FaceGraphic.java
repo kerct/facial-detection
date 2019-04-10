@@ -7,7 +7,8 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 
 import com.example.facialrecognition.components.GraphicOverlay;
-import com.google.android.gms.vision.CameraSource;
+import com.example.facialrecognition.components.CameraSource;
+//import com.google.android.gms.vision.CameraSource;
 import com.google.firebase.ml.vision.common.FirebaseVisionPoint;
 import com.google.firebase.ml.vision.face.FirebaseVisionFace;
 import com.google.firebase.ml.vision.face.FirebaseVisionFaceLandmark;
